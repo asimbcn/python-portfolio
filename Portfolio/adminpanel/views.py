@@ -6,23 +6,40 @@ from User.models import User, UserProfile, Work, Education, Project, Contact
 # Create your views here.
 def login(request):
     if request.method == 'POST':
-        PASS
-    return render(request,'admin/login.html')
+        user = auth.authenticate(username=request.POST['username'],password=request.POST['password'])
+        if user is not None:
+            auth.login(request, user)
+            profile = UserProfile.objects.get(vuser = user)
+            if profile.name == 'Unknown':
+                return render(request,'admin-panel/OTF.html')
+            else:    
+                return render(request,'admin-panel/panel.html')
+        else:
+            try:
+                user = User.objects.get(username=request.POST['username'])
+                if user:
+                    return render(request, 'account/login.html',{'error':'Incorrect Password'})
+            except:
+                print('User',user)
+                return render(request, 'admin-panel/login.html',{'error':'Incorrect Username'})
+        return render(request,'admin-panel/login.html')    
+    else:    
+        return render(request,'admin-panel/login.html')
 
 def register(request):
     if request.method == 'POST':
         try:
             user = User.objects.get(username=request.POST['username'])
-            return render(request, 'admin/register.html', {'error':'Username already exists'})
+            return render(request, 'admin-panel/register.html', {'error':'Username already exists'})
         except User.DoesNotExist:
             agree =  request.POST.get('agree-term', False)
             if agree == False:
-                return render(request, 'admin/register.html', {'error':'Terms and Conditions not satisfied'})
+                return render(request, 'admin-panel/register.html', {'error':'Terms and Conditions not satisfied'})
             else:    
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
                 if request.POST['code'] != 'code':
                     user.delete()
-                    return render(request, 'admin/register.html', {'error':'Invalid Code!'})
+                    return render(request, 'admin-panel/register.html', {'error':'Invalid Code!'})
                 profile = UserProfile()
                 profile.name = 'Unknown'    
                 profile.email = request.POST['email']
@@ -33,13 +50,13 @@ def register(request):
                     return redirect('login')
                 except:
                     user.delete()
-                    return render(request,'admin/register.html',{'error':'Could Not Register User'})
+                    return render(request,'admin-panel/register.html',{'error':'Could Not Register User'})
     else:
-        return render(request,'admin/register.html')  
+        return render(request,'admin-panel/register.html')  
 
 @login_required(login_url='login')
 def index(request):
-    return render(request,'admin/panel.html')        
+    return render(request,'admin-panel/panel.html')        
 
 @login_required(login_url='login')
 def logout(request):

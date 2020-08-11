@@ -11,17 +11,19 @@ class UserManager(BaseUserManager):
         user = self.model(username=username)
         user.set_password(password)
         user.save(using=self._db)
-        return user
+        return user   
 
 
 class User(AbstractBaseUser):
     objects = UserManager()
-    username = models.TextField(
+    username = models.CharField(
         verbose_name = 'username',
         max_length = 50,
         unique = True
     )
+    active = models.BooleanField(default=True)
 
+    EMAIL_FIELD = 'username'
     USERNAME_FIELD = 'username'
     REQUIRED_FIELD = [] #password
 
@@ -29,7 +31,7 @@ class User(AbstractBaseUser):
         return True
 
     def has_module_perms(self, app_label):
-        return True
+        return True   
 
 class UserProfile(models.Model):
     name = models.CharField(max_length=30,null=True)
