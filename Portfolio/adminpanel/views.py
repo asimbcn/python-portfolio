@@ -52,7 +52,14 @@ def register(request):
                     user.delete()
                     return render(request,'admin-panel/register.html',{'error':'Could Not Register User'})
     else:
-        return render(request,'admin-panel/register.html')  
+        return render(request,'admin-panel/register.html')
+
+@login_required(login_url='login')
+def OTF(request):
+    if request.method == 'POST':
+        pass
+    else:        
+        return render(request,'admin-panel/OTF.html')         
 
 @login_required(login_url='login')
 def index(request):
