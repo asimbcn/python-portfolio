@@ -11,18 +11,18 @@ def login(request):
             auth.login(request, user)
             profile = UserProfile.objects.get(vuser = user)
             if profile.name == 'Unknown':
-                return render(request,'admin-panel/OTF.html')
+                return redirect('otf')
             else:    
-                return render(request,'admin-panel/panel.html')
+                return redirect('index')
         else:
             try:
                 user = User.objects.get(username=request.POST['username'])
                 if user:
                     return render(request, 'account/login.html',{'error':'Incorrect Password'})
             except:
-                print('User',user)
                 return render(request, 'admin-panel/login.html',{'error':'Incorrect Username'})
-        return render(request,'admin-panel/login.html')    
+
+        # return render(request,'admin-panel/login.html')    
     else:    
         return render(request,'admin-panel/login.html')
 
@@ -57,13 +57,59 @@ def register(request):
 @login_required(login_url='login')
 def OTF(request):
     if request.method == 'POST':
-        pass
+        try:
+            user = request.user
+            profile = UserProfile.objects.get(vuser = user)
+            profile.name = request.POST['name']
+            profile.interest = request.POST['interest']
+            profile.address = request.POST['address']
+            profile.phone_no = request.POST['phone']
+            profile.website = request.POST['website']
+            profile.about = request.POST['about']
+
+            work = Work()
+            work.title = request.POST['title']
+            work.c_name = request.POST['cname']
+            work.work_from = request.POST['wfrom'] 
+            work.work_till = request.POST['wtill']
+            work.description = request.POST['wdesc']
+            work.user = user
+
+            education = Education()
+            education.title = request.POST['etitle']
+            education.name = request.POST['ename']
+            education.study_from = request.POST['efrom']
+            education.study_till = request.POST['etill']
+            education.description = request.POST['edesc']
+            education.user = user
+            
+            project = Project()
+            project.title = request.POST['ptitle']
+            project.name = request.POST['pname']
+            project.user = user
+
+            try:
+                profile.save()
+                work.save()
+                education.save()
+                project.save()
+                return redirect('index')
+
+            except:
+                work.delete()
+                education.delete()
+                project.delete()
+                logout()     
+
+        except UserProfile.DoesNotExist:
+            return render(request, 'admin-panel/OTF', {'error':'User Not Registered'})    
+            return redirect('otf') 
     else:        
         return render(request,'admin-panel/OTF.html')         
 
 @login_required(login_url='login')
 def index(request):
-    return render(request,'admin-panel/panel.html')        
+    return render(request,'admin-panel/panel/panel.html')      
 
 @login_required(login_url='login')
 def logout(request):

@@ -49,22 +49,22 @@ class UserProfile(models.Model):
 
 class Work(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    title = models.CharField(max_length=30)
-    c_name = models.CharField(max_length=30)
-    work_from = models.CharField(max_length=30)
-    work_till = models.CharField(max_length=30)
-    description = models.CharField(max_length=30)
+    title = models.CharField(max_length=30,default='Undefined')
+    c_name = models.CharField(max_length=30,default='Undefined')
+    work_from = models.CharField(max_length=30,default='Undefined')
+    work_till = models.CharField(max_length=30,default='Undefined')
+    description = models.CharField(max_length=30,default='Undefined')
 
     def __str__(self):
         return self.title
 
 class Education(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    title = models.CharField(max_length=30)
-    name = models.CharField(max_length=50)
-    study_from = models.CharField(max_length=30)
-    study_till = models.CharField(max_length=30)
-    description = models.CharField(max_length=30)
+    title = models.CharField(max_length=30,default='Undefined')
+    name = models.CharField(max_length=50,default='Undefined')
+    study_from = models.CharField(max_length=30,default='Undefined')
+    study_till = models.CharField(max_length=30,default='Undefined')
+    description = models.CharField(max_length=30,default='Undefined')
 
     def __str__(self):
         return self.title
@@ -72,12 +72,12 @@ class Education(models.Model):
 
 class Project(models.Model):
     user = models.ForeignKey(User,on_delete=models.CASCADE)
-    title = models.CharField(max_length=30) 
-    name = models.CharField(max_length=30)
+    title = models.CharField(max_length=30,default='Undefined') 
+    name = models.CharField(max_length=30,default='Undefined')
     in_progress = models.BooleanField(default=False)
-    language = models.CharField(max_length=30)
-    description = models.CharField(max_length=30)
-    completion = models.IntegerField()
+    language = models.CharField(max_length=30,null=True)
+    description = models.CharField(max_length=30,null=True),
+    completion = models.IntegerField(null=True)
     image = models.ImageField(upload_to='project/',null=True)
 
     def __str__(self):
