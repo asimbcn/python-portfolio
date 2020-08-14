@@ -63,7 +63,10 @@ def OTF(request):
             profile.name = request.POST['name']
             profile.interest = request.POST['interest']
             profile.address = request.POST['address']
-            profile.phone_no = request.POST['phone']
+            if request.POST['phone'] == '':
+                profile.phone_no = '000000'
+            else:    
+                profile.phone_no = request.POST['phone']
             profile.website = request.POST['website']
             profile.about = request.POST['about']
 
@@ -109,7 +112,12 @@ def OTF(request):
 
 @login_required(login_url='login')
 def index(request):
-    return render(request,'admin-panel/panel/panel.html')      
+    user = request.user
+    all_user = User.objects.all()
+    profile = UserProfile.objects.get(vuser = user)
+    current = str(profile.vuser)
+    project = Project.objects.get(user = user)
+    return render(request,'admin-panel/panel/panel.html',{'data':profile,'project':project,'all':all_user,'current':current})      
 
 @login_required(login_url='login')
 def logout(request):

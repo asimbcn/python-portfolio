@@ -21,7 +21,7 @@ class User(AbstractBaseUser):
         max_length = 50,
         unique = True
     )
-    active = models.BooleanField(default=True)
+    active = models.BooleanField(default=False)
 
     EMAIL_FIELD = 'username'
     USERNAME_FIELD = 'username'
@@ -37,7 +37,7 @@ class UserProfile(models.Model):
     name = models.CharField(max_length=30,null=True)
     interest = models.CharField(max_length=100,null=True)
     address = models.CharField(max_length=80,null=True)
-    phone_no = models.IntegerField(null=True)
+    phone_no = models.IntegerField(default='000000')
     email = models.EmailField(unique=True)
     website = models.CharField(max_length=100,null=True)
     about = models.TextField(null=True)
