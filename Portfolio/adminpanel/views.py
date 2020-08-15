@@ -122,6 +122,15 @@ def index(request):
     return render(request,'admin-panel/panel/panel.html',{'data':profile,'project':project,'work':work,'education':education,'all':all_user,'current':current})      
 
 @login_required(login_url='login')
+def table(request):
+    user = request.user
+    profile = UserProfile.objects.get(vuser = user)
+    work = Work.objects.get(user = user)
+    education = Education.objects.get(user = user)
+    project = Project.objects.get(user = user)
+    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education})
+    
+@login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     return redirect('login')
