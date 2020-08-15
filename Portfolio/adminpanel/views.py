@@ -114,10 +114,12 @@ def OTF(request):
 def index(request):
     user = request.user
     all_user = User.objects.all()
-    profile = UserProfile.objects.get(vuser = user)
+    profile = UserProfile.objects.filter(vuser = user).first()
     current = str(profile.vuser)
-    project = Project.objects.get(user = user)
-    return render(request,'admin-panel/panel/panel.html',{'data':profile,'project':project,'all':all_user,'current':current})      
+    project = Project.objects.filter(user = user).first()
+    work = Work.objects.filter(user = user).first()
+    education = Education.objects.filter(user = user).first()
+    return render(request,'admin-panel/panel/panel.html',{'data':profile,'project':project,'work':work,'education':education,'all':all_user,'current':current})      
 
 @login_required(login_url='login')
 def logout(request):
