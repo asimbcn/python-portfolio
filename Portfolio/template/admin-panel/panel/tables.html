@@ -24,7 +24,7 @@
             </div>
           </div>
 		</div>
-		<!-- Table Data -->
+		<!-- User Profile -->
         <div class="content-body">
 		<!-- Basic Tables start -->
 			<div class="row">
@@ -48,30 +48,35 @@
 						<table class="table">
 							<thead>
 								<tr>
-									<th>#</th>
-									<th>First Name</th>
-									<th>Last Name</th>
-									<th>Username</th>
+									<th>Name</th>
+									<th>Interest</th>
+									<th>Address</th>
+									<th>Contact</th>
+									<th>Email</th>
+									<th>Website</th>
+									<th>About</th>
+									<th>Image</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr>
-									<th scope="row">1</th>
-									<td>Mark</td>
-									<td>Otto</td>
-									<td>@mdo</td>
-								</tr>
-								<tr>
-									<th scope="row">2</th>
-									<td>Jacob</td>
-									<td>Thornton</td>
-									<td>@fat</td>
-								</tr>
-								<tr>
-									<th scope="row">3</th>
-									<td>Larry</td>
-									<td>the Bird</td>
-									<td>@twitter</td>
+									<td>{{data.name}}</td>
+									<td>{{data.interest}}</td>
+									<td>{{data.address}}</td>
+									<td>***{{extra.phone}}</td>
+									<td>{{extra.email}}**.com</td>
+									<td>{% if data.website != ''%}
+										<a href="{{data.website}}" target="_blank">Link</a> 
+										{%endif%}</td>
+									<td>{{data.about}}</td>
+									<td>
+									{% if data.image != '' %}
+										True
+									{% else %}	
+										False
+									{%endif%}
+
+									</td>
 								</tr>
 							</tbody>
 						</table>
@@ -81,6 +86,172 @@
 		</div>
 	</div>
 			</div>
+		</div>
+		<!-- Work -->
+		<div class="content-body">
+			<!-- Basic Tables start -->
+				<div class="row">
+				<div class="col-12">
+				<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Work</h4>
+					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+					<div class="heading-elements">
+						<ul class="list-inline mb-0">
+							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							<li><a data-action="close"><i class="ft-x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-content collapse show">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Title</th>
+										<th>Company Name</th>
+										<th>Work Start</th>
+										<th>Work End</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for w in work%}
+									<tr>
+										<td>{{w.title}}</td>
+										<td>{{w.c_name}}</td>
+										<td>{{w.work_from}}</td>
+										<td>{{w.work_till}}</td>
+										<td>{{w.description}}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				</div>
+		</div>
+		<!-- Education -->
+		<div class="content-body">
+			<!-- Basic Tables start -->
+				<div class="row">
+				<div class="col-12">
+				<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Education</h4>
+					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+					<div class="heading-elements">
+						<ul class="list-inline mb-0">
+							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							<li><a data-action="close"><i class="ft-x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-content collapse show">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Title</th>
+										<th>Name</th>
+										<th>Study From</th>
+										<th>Study End</th>
+										<th>Description</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for e in education%}
+									<tr>
+										<td>{{e.title}}</td>
+										<td>{{e.name}}</td>
+										<td>{{e.study_from}}</td>
+										<td>{{e.study_till}}</td>
+										<td>{{e.description}}</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				</div>
+		</div>
+		<!-- Project -->
+		<div class="content-body">
+			<!-- Basic Tables start -->
+				<div class="row">
+				<div class="col-12">
+				<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Project</h4>
+					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+					<div class="heading-elements">
+						<ul class="list-inline mb-0">
+							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							<li><a data-action="close"><i class="ft-x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-content collapse show">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Title</th>
+										<th>Name</th>
+										<th>In_Progress</th>
+										<th>Language</th>
+										<th>Description</th>
+										<th>Progress</th>
+										<th>Image</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for p in project %}
+									<tr>
+										<td>{{p.title}}</td>
+										<td>{{p.name}}</td>
+										<td>
+										{%if p.in_progress%}
+											True
+										{% else %}
+											False
+										{%endif%}
+										</td>
+										<td>{{p.language}}</td>
+										<td>{{p.description}}</td>
+										<td>{{p.completion}} %</td>
+										<td>
+											{% if p.image != '' %}
+												True
+											{% else %}
+												False
+											{% endif %}
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				</div>
 		</div>
 		
       </div>

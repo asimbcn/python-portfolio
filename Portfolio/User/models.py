@@ -53,7 +53,7 @@ class Work(models.Model):
     c_name = models.CharField(max_length=30,default='Undefined')
     work_from = models.CharField(max_length=30,default='Undefined')
     work_till = models.CharField(max_length=30,default='Undefined')
-    description = models.CharField(max_length=30,default='Undefined')
+    description = models.TextField(null=True)
 
     def __str__(self):
         return self.title
@@ -64,7 +64,7 @@ class Education(models.Model):
     name = models.CharField(max_length=50,default='Undefined')
     study_from = models.CharField(max_length=30,default='Undefined')
     study_till = models.CharField(max_length=30,default='Undefined')
-    description = models.CharField(max_length=30,default='Undefined')
+    description = models.TextField(null=True)
 
     def __str__(self):
         return self.title
@@ -76,7 +76,7 @@ class Project(models.Model):
     name = models.CharField(max_length=30,default='Undefined')
     in_progress = models.BooleanField(default=False)
     language = models.CharField(max_length=30,null=True)
-    description = models.CharField(max_length=30,null=True),
+    description = models.TextField(null=True)
     completion = models.IntegerField(null=True)
     image = models.ImageField(upload_to='project/',null=True)
 
@@ -89,7 +89,7 @@ class Contact(models.Model):
     name = models.CharField(max_length=30) 
     email = models.EmailField(max_length=255)
     subject = models.CharField(max_length=50)
-    description = models.TextField()
+    description = models.TextField(null=True)
     status = models.BooleanField(default=False)
 
     def __str__(self):

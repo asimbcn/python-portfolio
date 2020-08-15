@@ -21,8 +21,7 @@ def login(request):
                     return render(request, 'account/login.html',{'error':'Incorrect Password'})
             except:
                 return render(request, 'admin-panel/login.html',{'error':'Incorrect Username'})
-
-        # return render(request,'admin-panel/login.html')    
+    
     else:    
         return render(request,'admin-panel/login.html')
 
@@ -125,10 +124,16 @@ def index(request):
 def table(request):
     user = request.user
     profile = UserProfile.objects.get(vuser = user)
-    work = Work.objects.get(user = user)
-    education = Education.objects.get(user = user)
-    project = Project.objects.get(user = user)
-    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education})
+    email = profile.email
+    phone = str(profile.phone_no)
+    extra = {
+        'phone': phone[-3:],
+        'email': email[0:2]
+    }
+    work = Work.objects.filter(user = user)
+    education = Education.objects.filter(user = user)
+    project = Project.objects.filter(user = user)
+    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education,'extra':extra})
     
 @login_required(login_url='login')
 def logout(request):
