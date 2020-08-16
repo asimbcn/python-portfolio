@@ -8,5 +8,6 @@ urlpatterns = [
     path('index/',views.index ,name='index'),
     path('OTF/',views.OTF,name='otf'),
     path('view/',views.table,name='view'),
+    path('edit-user/',views.edit_user,name='editUser'),
     path('Logout/',views.logout,name='logout')
 ]

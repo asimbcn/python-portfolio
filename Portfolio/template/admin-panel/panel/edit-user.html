@@ -1,0 +1,176 @@
+{% extends 'admin-panel/panel/template/main.html'%}
+{% load static %}
+{% block 'title' %}Edit User{% endblock %}
+{% block 'content'%}
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-wrapper-before"></div>
+      <div class="content-header row">
+        <div class="content-header-left col-md-4 col-12 mb-2">
+          <h3 class="content-header-title">Edit User</h3>
+          {% if error %}
+          <h4 class="content-header-title" style="color: red;">{{error}}/h4>
+          {% endif %}
+        </div>
+        <div class="content-header-right col-md-8 col-12">
+          <div class="breadcrumbs-top float-md-right">
+            <div class="breadcrumb-wrapper mr-1">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Edit User
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+<form action="{% url 'editUser'%}" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+<div class="content-body">
+  <section class="basic-inputs">
+  <div class="row match-height">
+    <div class="col-xl-4 col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Name</h4>
+            </div>
+            <div class="card-block">
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        <input type="text" class="form-control" id="placeholderInput" name="name" placeholder="{{data.name}}">
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Interest</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <input type="text" class="form-control" id="placeholderInput" name="interest" placeholder="{{data.interest}}">
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Address</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <input type="text" class="form-control" id="placeholderInput" name="address" placeholder="{{data.address}}">
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Contact Number</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <input type="number" class="form-control" id="placeholderInput" name="phone_no" placeholder="{{data.phone_no}}">
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Email</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <input type="email" class="form-control" id="placeholderInput" name="email" placeholder="{{data.email}}">
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Website</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <input type="text" class="form-control" name="website" id="placeholderInput" 
+                      {% if data.website != ''%}
+                      placeholder="{{data.website}}">
+                      {% else %}
+                      value="http://">
+                      {% endif %}
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">About</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <textarea class="form-control" id="placeTextarea" name="about" rows="2" placeholder="{{data.about}}"></textarea>
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">
+              <h4 class="card-title">Image</h4>
+          </div>
+          <div class="card-block">
+              <div class="card-body">
+                  <fieldset class="form-group">
+                      <input type="file" class="form-control" name="image" id="placeholderInput">
+                  </fieldset>
+              </div>
+          </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+      <div class="card">
+          <div class="card-header">     
+            <img src="{{data.image.url}}" alt="Profile Picture" style="width: 85%; margin-left: 22px;">  
+          </div>
+      </div>    
+    </div>
+    <div style="margin-left: 20px;">
+      <button type="submit" class="btn btn-success btn-min-width mr-1 mb-1">Submit</button>
+      <input type="reset" class="btn btn-danger btn-min-width mr-1 mb-1" value="Clear"></input>
+    </div>
+    <div style="margin-left: 590px;">
+        <a href="{% url 'index' %}" class="btn btn-info btn-min-width mr-1 mb-1">Back</a>
+    </div>
+  <!-- Closing -->
+  </div>   
+  
+  </section>
+  
+</div>
+</form>
+</div>
+</div>
+
+
+      
+{% endblock %} 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
-from User.models import User, UserProfile, Work, Education, Project, Contact
+from User.models import User, UserProfile, Work, Education, Project
 
 # Create your views here.
 def login(request):
@@ -104,8 +104,7 @@ def OTF(request):
                 logout()     
 
         except UserProfile.DoesNotExist:
-            return render(request, 'admin-panel/OTF', {'error':'User Not Registered'})    
-            return redirect('otf') 
+            return render(request, 'admin-panel/login.html', {'error':'User Not Registered'}) 
     else:        
         return render(request,'admin-panel/OTF.html')         
 
@@ -134,6 +133,14 @@ def table(request):
     education = Education.objects.filter(user = user)
     project = Project.objects.filter(user = user)
     return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education,'extra':extra})
+
+@login_required(login_url='login')
+def edit_user(request):
+    profile = UserProfile.objects.get(vuser = request.user)
+    if request.method == 'POST':
+        return redirect('index')
+    else:
+        return render(request,'admin-panel/panel/edit-user.html',{'data':profile})    
     
 @login_required(login_url='login')
 def logout(request):
