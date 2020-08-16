@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from User.models import User, UserProfile, Work, Education, Project
 
@@ -138,10 +139,35 @@ def table(request):
 def edit_user(request):
     profile = UserProfile.objects.get(vuser = request.user)
     if request.method == 'POST':
-        return redirect('index')
+        if request.POST['email'] != '':
+            mail = UserProfile.objects.filter(email = request.POST['email'])
+            if mail:
+                return render(request,'admin-panel/panel/edit-user.html',{'data':profile,'error':'Email Already Exist'})
+            else:
+                profile.email = request.POST['email']
+        if request.POST['name'] != '': profile.name = request.POST['name']
+        if request.POST['interest'] != '': profile.interest = request.POST['interest']
+        if request.POST['address'] != '': profile.address = request.POST['address']
+        if request.POST['phone_no'] != '': profile.phone_no = request.POST['phone_no']    
+        if request.POST['website'] != '': profile.website = request.POST['website']
+        if request.POST['about'] != '': profile.about = request.POST['about']
+        try:
+            profile.image = request.FILES['image']
+        except MultiValueDictKeyError:    
+            pass
+
+        try:
+            profile.save()
+            return redirect('index')
+        except:
+            return render(request,'admin-panel/panel/edit-user.html',{'data':profile,'error':'Profile Update Error'})
     else:
         return render(request,'admin-panel/panel/edit-user.html',{'data':profile})    
-    
+
+@login_required(login_url='login')
+def edit_work(request):
+    print('EDIT WORK')
+
 @login_required(login_url='login')
 def logout(request):
     auth.logout(request)
