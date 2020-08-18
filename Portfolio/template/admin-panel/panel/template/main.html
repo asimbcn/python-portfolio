@@ -104,11 +104,11 @@
       </div>
       <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-          <li class="active"><a href="{% url 'index' %}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+          <li class="{% if active %}nav-item{%else%}active{%endif%}"><a href="{% url 'index' %}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="#"><i class="ft-layers"></i><span class="menu-title" data-i18n="">Cards</span></a>
           </li> -->
-          <li class=" nav-item"><a href="{% url 'view' %}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">View Data</span></a>
+          <li class="{% if active %}active{%else%}nav-item{%endif%}"><a href="{% url 'view' %}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">View Data</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="#"><i class="ft-layout"></i><span class="menu-title" data-i18n="">Form Elements</span></a>
           </li> -->

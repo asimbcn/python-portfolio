@@ -75,7 +75,6 @@
 									{% else %}	
 										False
 									{%endif%}
-
 									</td>
 								</tr>
 							</tbody>
@@ -94,7 +93,7 @@
 				<div class="col-12">
 				<div class="card">
 				<div class="card-header">
-					<h4 class="card-title">Work</h4>
+					<h4 class="card-title"><a href="{% url 'addWork'%}" style="text-decoration: none;">Work</a></h4>
 					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 					<div class="heading-elements">
 						<ul class="list-inline mb-0">
@@ -116,6 +115,7 @@
 										<th>Work Start</th>
 										<th>Work End</th>
 										<th>Description</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -126,6 +126,11 @@
 										<td>{{w.work_from}}</td>
 										<td>{{w.work_till}}</td>
 										<td>{{w.description}}</td>
+										<td>
+											<a href="{%url 'editWork' w.id %}"><i class="la la-edit"></i></a> &nbsp;&nbsp;
+											<a href="{%url 'deleteWork' w.id %}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
+										</td>
+										
 									</tr>
 									{% endfor %}
 								</tbody>
@@ -144,7 +149,7 @@
 				<div class="col-12">
 				<div class="card">
 				<div class="card-header">
-					<h4 class="card-title">Education</h4>
+					<h4 class="card-title"><a href="{% url 'addEducation'%}" style="text-decoration: none;">Education</a></h4>
 					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 					<div class="heading-elements">
 						<ul class="list-inline mb-0">
@@ -166,6 +171,7 @@
 										<th>Study From</th>
 										<th>Study End</th>
 										<th>Description</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -176,6 +182,10 @@
 										<td>{{e.study_from}}</td>
 										<td>{{e.study_till}}</td>
 										<td>{{e.description}}</td>
+										<td>
+											<a href="{%url 'editEducation' e.id%}"><i class="la la-edit"></i></a> &nbsp;&nbsp;
+											<a href="{%url 'deleteEducation' e.id%}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
+										</td>
 									</tr>
 									{% endfor %}
 								</tbody>
@@ -194,7 +204,7 @@
 				<div class="col-12">
 				<div class="card">
 				<div class="card-header">
-					<h4 class="card-title">Project</h4>
+					<h4 class="card-title"><a href="{% url 'addProject'%}" style="text-decoration: none;">Project</a></h4>
 					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
 					<div class="heading-elements">
 						<ul class="list-inline mb-0">
@@ -218,6 +228,7 @@
 										<th>Description</th>
 										<th>Progress</th>
 										<th>Image</th>
+										<th>Action</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -241,6 +252,10 @@
 											{% else %}
 												False
 											{% endif %}
+										</td>
+										<td>
+											<a href="{%url 'editProject' p.id%}"><i class="la la-edit"></i></a>
+											<a href="{%url 'deleteProject' p.id%}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
 										</td>
 									</tr>
 									{% endfor %}

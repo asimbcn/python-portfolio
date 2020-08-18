@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+from datetime import datetime
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from User.models import User, UserProfile, Work, Education, Project
@@ -133,7 +134,7 @@ def table(request):
     work = Work.objects.filter(user = user)
     education = Education.objects.filter(user = user)
     project = Project.objects.filter(user = user)
-    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education,'extra':extra})
+    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education,'extra':extra,'active':'active'})
 
 @login_required(login_url='login')
 def edit_user(request):
@@ -155,7 +156,7 @@ def edit_user(request):
             profile.image = request.FILES['image']
         except MultiValueDictKeyError:    
             pass
-
+        
         try:
             profile.save()
             return redirect('index')
@@ -165,12 +166,195 @@ def edit_user(request):
         return render(request,'admin-panel/panel/edit-user.html',{'data':profile})    
 
 @login_required(login_url='login')
-def edit_work(request):
-    print('EDIT WORK')
-
-@login_required(login_url='login')
 def logout(request):
     auth.logout(request)
     return redirect('login')
+
+@login_required(login_url='login')
+def add_work(request):
+    data = UserProfile.objects.get(vuser = request.user)
+    if request.method == 'POST':
+        if request.POST['title'] == '': 
+            return render(request,'admin-panel/panel/add-work.html',{'data':data,'error':'Title is Empty','active':'active'})
+        if request.POST['work_from'] != '':   
+            if int(request.POST['work_from']) > datetime.now().year or int(request.POST['work_from']) < (datetime.now().year - 100):
+                return render(request,'admin-panel/panel/add-work.html',{'data':data,'error':'Work Start Year is Invalid','active':'active'})
+        if request.POST['work_till'] != '':
+            if int(request.POST['work_till']) < int(request.POST['work_from']) or int(request.POST['work_till']) > (datetime.now().year + 70):       
+                return render(request,'admin-panel/panel/add-work.html',{'data':data,'error':'Work End Year is Invalid','active':'active'})  
+        work = Work()
+        work.title = request.POST['title']
+        work.c_name = request.POST['c_name']
+        work.work_from = request.POST['work_from']
+        work.work_till = request.POST['work_till']
+        work.description = request.POST['description']
+        work.user = request.user
+        try:
+            work.save()
+            return redirect('view')
+        except:
+            return render(request,'admin-panel/panel/add-work.html',{'data':data,'error':'Could not Add Work Data!','active':'active'})    
+
+        
+    else:
+        return render(request,'admin-panel/panel/add-work.html',{'data':data,'active':'active'})    
+
+@login_required(login_url='login')
+def edit_work(request, id):
+    data = UserProfile.objects.get(vuser = request.user)
+    work = Work.objects.get(id = id)
+    if request.method == 'POST':
+        if request.POST['work_from'] != '' and work.work_from != '':   
+            if int(request.POST['work_from']) > datetime.now().year or int(request.POST['work_from']) < (datetime.now().year - 100) or int(request.POST['work_from']) > int(work.work_till):
+                return render(request,'admin-panel/panel/edit-work.html',{'data':data,'work':work,'error':'Work Start Year is Invalid','active':'active'})
+
+        if request.POST['work_till'] != '':
+            if request.POST['work_from'] == '' and work.work_from != '': work_date = work.work_from
+            elif work.work_from == '':
+                return render(request,'admin-panel/panel/edit-work.html',{'data':data,'work':work,'error':'Work Start is Empty','active':'active'})
+            elif request.POST['work_from'] != '': 
+                work_date = request.POST['work_from']  
+
+            if int(request.POST['work_till']) < int(work_date) or int(request.POST['work_till']) > (datetime.now().year + 70):       
+                return render(request,'admin-panel/panel/edit-work.html',{'data':data,'work':work,'error':'Work End Year is Invalid','active':'active'})
+                 
+
+        if request.POST['title'] != '': work.title = request.POST['title']
+        if request.POST['c_name'] != '': work.c_name = request.POST['c_name']
+        if request.POST['work_from'] != '': work.work_from = request.POST['work_from']
+        if request.POST['work_till'] != '': work.work_till = request.POST['work_till']
+        if request.POST['description'] != '': work.description = request.POST['description']
+        try:
+            work.save()
+            return redirect('view')
+        except:
+            return render(request,'admin-panel/panel/edit-work.html',{'data':data,'work':work,'error':'Could Not Edit Work','active':'active'})    
+    else:      
+        return render(request,'admin-panel/panel/edit-work.html',{'data':data,'work':work,'active':'active'}) 
+
+@login_required(login_url='login')
+def delete_work(request, id):
+    work = Work.objects.get(id = id)
+    work.delete()
+    return redirect('view')
+
+@login_required(login_url='login')
+def add_education(request):
+    data = UserProfile.objects.get(vuser = request.user)
+    if request.method == 'POST':
+        if request.POST['title'] == '': 
+            return render(request,'admin-panel/panel/add-education.html',{'data':data,'error':'Title is Empty','active':'active'})
+        if request.POST['study_from'] != '':   
+            if int(request.POST['study_from']) > datetime.now().year or int(request.POST['study_from']) < (datetime.now().year - 100):
+                return render(request,'admin-panel/panel/add-education.html',{'data':data,'error':'Education Start Year is Invalid','active':'active'})
+        if request.POST['study_till'] != '':
+            if int(request.POST['study_till']) < int(request.POST['study_from']) or int(request.POST['study_till']) > (datetime.now().year + 70):       
+                return render(request,'admin-panel/panel/add-education.html',{'data':data,'error':'Education End Year is Invalid','active':'active'})
+
+        education = Education()
+        education.title = request.POST['title']
+        education.name = request.POST['name']
+        education.study_from = request.POST['study_from']
+        education.study_till = request.POST['study_till']
+        education.description = request.POST['description']
+        education.user = request.user
+        try:
+            education.save()
+            return redirect('view')
+        except:
+            return render(request,'admin-panel/panel/add-education.html',{'data':data,'error':'Could not Add Education Data!','active':'active'})    
+    else:
+        return render(request,'admin-panel/panel/add-education.html',{'data':data,'active':'active'})     
+
+@login_required(login_url='login')
+def edit_education(request, id):
+    data = UserProfile.objects.get(vuser = request.user)
+    education = Education.objects.get(id = id)
+    if request.method == 'POST':
+        if request.POST['study_from'] != '' and education.study_from != '':   
+            if int(request.POST['study_from']) > datetime.now().year or int(request.POST['study_from']) < (datetime.now().year - 100) or int(request.POST['study_from']) > int(education.study_till):
+                return render(request,'admin-panel/panel/edit-education.html',{'data':data,'education':education,'error':'Education Start Year is Invalid','active':'active'})
+
+        if request.POST['study_till'] != '':
+            if request.POST['study_from'] == '' and education.study_from != '': edu_date = education.study_from
+            elif education.study_from == '':
+                return render(request,'admin-panel/panel/edit-education.html',{'data':data,'education':education,'error':'Education Start is Empty','active':'active'})
+            elif request.POST['study_from'] != '': 
+                edu_date = request.POST['study_from']  
+
+            if int(request.POST['study_till']) < int(edu_date) or int(request.POST['study_till']) > (datetime.now().year + 70):       
+                return render(request,'admin-panel/panel/edit-education.html',{'data':data,'education':education,'error':'Education End Year is Invalid','active':'active'})
+
+        if request.POST['title'] != '': education.title = request.POST['title']
+        if request.POST['name'] != '': education.name = request.POST['name']
+        if request.POST['study_from'] != '': education.study_from = request.POST['study_from']
+        if request.POST['study_till'] != '': education.study_till = request.POST['study_till']
+        if request.POST['description'] != '': education.description = request.POST['description']
+        try:
+            education.save()
+            return redirect('view')
+        except:
+            return render(request,'admin-panel/panel/edit-education.html',{'data':data,'education':education,'error':'Could Not Edit Education','active':'active'})
+              
+    else:
+        return render(request,'admin-panel/panel/edit-education.html',{'data':data,'education':education,'active':'active'})
+
+
+@login_required(login_url='login')
+def delete_education(request, id):
+    education = Education.objects.get(id = id)
+    education.delete()
+    return redirect('view')
+
+@login_required(login_url='login')
+def add_project(request):
+    data = UserProfile.objects.get(vuser = request.user)
+    if request.method == 'POST':
+        if request.POST['title'] == '':
+            return render(request,'admin-panel/panel/add-project.html',{'data':data,'error':'Title is Empty','active':'active'})
+        if request.POST['name'] == '':
+            return render(request,'admin-panel/panel/add-project.html',{'data':data,'error':'Project Name is Empty','active':'active'})
+
+        project = Project()
+        project.title = request.POST['title']
+        project.name = request.POST['name']
+        project.user = request.user        
+        if request.POST['in_progress'] == 'True':
+            project.in_progress = request.POST['in_progress']
+            project.language = request.POST['language']
+            project.description = request.POST['description']
+            project.completion = request.POST['completion']
+        else:
+            project.in_progress = request.POST['in_progress'] 
+
+        try:
+            project.image = request.FILES['image']
+        except MultiValueDictKeyError:
+            pass
+
+        try:
+            project.save()
+            return redirect('view')
+        except:
+            return render(request,'admin-panel/panel/add-project.html',{'data':data,'error':'Could not Add Project Data!','active':'active'})        
+ 
+    else:
+        return render(request,'admin-panel/panel/add-project.html',{'data':data,'active':'active'})      
+
+@login_required(login_url='login')
+def edit_project(request, id):
+    data = UserProfile.objects.get(vuser = request.user)
+    project = Project.objects.get(id = id)
+    if request.method == 'POST':
+        pass
+    else:
+        return render(request,'admin-panel/panel/edit-project.html',{'data':data,'project':project,'active':'active'})    
+        
+
+@login_required(login_url='login')
+def delete_project(request, id):
+    project = Project.objects.get(id = id)
+    project.delete()
+    return redirect('view')                 
 
 
