@@ -77,7 +77,7 @@ class Project(models.Model):
     in_progress = models.BooleanField(default=False)
     language = models.CharField(max_length=30,null=True)
     description = models.TextField(null=True)
-    completion = models.IntegerField(null=True)
+    completion = models.IntegerField(default='0')
     image = models.ImageField(upload_to='project/',null=True)
 
     def __str__(self):

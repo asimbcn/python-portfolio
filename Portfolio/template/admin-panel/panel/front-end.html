@@ -1,0 +1,104 @@
+{% extends 'admin-panel/panel/template/main.html'%}
+{% load static %}
+{% block 'title' %}Frontend Controls{% endblock %}
+{% block 'content'%}
+<div class="app-content content">
+    <div class="content-wrapper">
+      <div class="content-wrapper-before"></div>
+      <div class="content-header row">
+        <div class="content-header-left col-md-4 col-12 mb-2">
+          <h3 class="content-header-title">Frontend Controls</h3>
+          {% if error %}
+          <h4 class="content-header-title" style="color: red;">{{error}}</h4>
+          {% endif %}
+        </div>
+        <div class="content-header-right col-md-8 col-12">
+          <div class="breadcrumbs-top float-md-right">
+            <div class="breadcrumb-wrapper mr-1">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'index' %}">Dashboard</a>
+                </li>
+                <li class="breadcrumb-item active">Frontend Controls
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+<form action="{% url 'frontend'%}" method="POST">
+  {% csrf_token %}
+<div class="content-body">
+  <section class="basic-inputs">
+  <div class="row match-height">
+    <div class="col-xl-4 col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Username ({{request.user}})</h4>
+            </div>
+            <div class="card-block">
+                <div class="card-body">
+                    <fieldset class="form-group">
+                        {%if criteria.met == 'False'%}
+                        <small style="color: red;">Please Fill Up Your Details to Activate</i></small>
+                        {%else%}
+                        <small class="text-muted">Enter Password to continue</i></small>
+                        {%endif%}
+                        <input type="password" class="form-control" id="placeholderInput" name="password" placeholder="Enter Password" 
+                        {%if criteria.met == 'False' or same.status == 'True'%}
+                        disabled
+                        {%endif%}
+                        >
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-4 col-lg-6 col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Currently Active</h4>
+            </div>
+            <div class="card-block">
+                <div class="card-body">
+                    <fieldset class="form-group">
+                    {% if same.status == 'False' %}    
+                        <p class="form-control-static" id="staticInput">{{current.username}}</p>
+                        <p>To activate your profile to the frontend, Click on the <code>"Activate"</code> Button.</p>
+                    {% else %}
+                        <p class="form-control-static" id="staticInput">You are the <code>Active</code> User</p>
+                    {% endif %}
+                    </fieldset>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    {% if same.status == 'False' %}
+    <div style="margin-left: 71px; margin-top: 20px;">
+      <button type="submit" class="btn btn-success btn-min-width mr-1 mb-1" 
+      {%if criteria.met == 'False'%}
+        disabled
+      {%endif%}
+      >Activate</button>
+      <input type="reset" class="btn btn-danger btn-min-width mr-1 mb-1" value="Clear"></input>
+    </div>
+    <div style="margin-left: 300px; margin-top: 20px;">
+        <a href="{% url 'index' %}" class="btn btn-info btn-min-width mr-1 mb-1">Back</a>
+    </div>
+    {%else%}
+    <div style="margin-left: 800px; margin-top: 80px;">
+        <a href="{% url 'index' %}" class="btn btn-info btn-min-width mr-1 mb-1">Back</a>
+    </div>
+    {%endif%}
+
+  <!-- Closing -->
+  </div>   
+  
+  </section>
+  
+</div>
+</form>
+</div>
+</div>
+{% endblock %}  

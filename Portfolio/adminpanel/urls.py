@@ -22,5 +22,8 @@ urlpatterns = [
     path('add-project/',views.add_project,name='addProject'),    
     path('edit-project/<int:id>',views.edit_project,name='editProject'),
     path('delete-project/<int:id>',views.delete_project,name='deleteProject'),
+
+    path('front-end/',views.front_end,name='frontend'),
+    path('delete-user/',views.delete_user,name='deleteUser'),
     
 ]

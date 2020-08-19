@@ -149,8 +149,10 @@
     </div>
     <div class="col-xl-4 col-lg-6 col-md-12">
       <div class="card">
-          <div class="card-header">     
-            <img src="{{data.image.url}}" alt="Profile Picture" style="width: 85%; margin-left: 22px;">  
+          <div class="card-header"> 
+            {% if data.image%}    
+            <img src="{{data.image.url}}" alt="Profile Picture" style="width: 85%; margin-left: 22px;"> 
+            {%endif%} 
           </div>
       </div>    
     </div>

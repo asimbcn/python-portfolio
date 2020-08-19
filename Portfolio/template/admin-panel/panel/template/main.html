@@ -38,7 +38,7 @@
             <ul class="nav navbar-nav mr-auto float-left">
               <li class="nav-item d-block d-md-none"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
               <!-- <li class="nav-item d-none d-md-block"><a class="nav-link nav-link-expand" href="#"><i class="ficon ft-maximize"></i></a></li> -->
-              <li class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide" data-toggle="dropdown" href="#"><i class="ficon ft-search"></i></a>
+              <!-- <li class="nav-item dropdown navbar-search"><a class="nav-link dropdown-toggle hide" data-toggle="dropdown" href="#"><i class="ficon ft-search"></i></a> -->
                 <ul class="dropdown-menu">
                   <li class="arrow_box">
                     <form>
@@ -77,9 +77,9 @@
                       <span class="user-name text-bold-700 ml-1">{{user.username}}</span></span></a>
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'editUser' %}"><i class="ft-user"></i> Edit Profile</a>
-                    <!-- <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a>
-                    <a class="dropdown-item" href="#"><i class="ft-check-square"></i> Task</a>
-                    <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a> -->
+                    <!-- <!-- <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a> -->
+                    <a class="dropdown-item" href="{% url 'deleteUser'%}"><i class="ft-check-square"></i> Delete Account</a>
+                    <!-- <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a> -->
                     <!-- <div class="dropdown-divider"></div> -->
                     <a class="dropdown-item" href="{% url 'logout' %}"><i class="ft-power"></i> Logout</a>
                   </div>
@@ -104,11 +104,13 @@
       </div>
       <div class="main-menu-content">
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-          <li class="{% if active %}nav-item{%else%}active{%endif%}"><a href="{% url 'index' %}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
+          <li class="{% if active or frontend %}nav-item{%else%}active{%endif%}"><a href="{% url 'index' %}"><i class="ft-home"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="#"><i class="ft-layers"></i><span class="menu-title" data-i18n="">Cards</span></a>
           </li> -->
           <li class="{% if active %}active{%else%}nav-item{%endif%}"><a href="{% url 'view' %}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">View Data</span></a>
+          </li>
+          <li class="{% if frontend %}active{%else%}nav-item{%endif%}"><a href="{% url 'frontend' %}"><i class="ft-credit-card"></i><span class="menu-title" data-i18n="">FrontEnd Control</span></a>
           </li>
           <!-- <li class=" nav-item"><a href="#"><i class="ft-layout"></i><span class="menu-title" data-i18n="">Form Elements</span></a>
           </li> -->

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
 from datetime import datetime
+from django.contrib.auth.hashers import check_password
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from User.models import User, UserProfile, Work, Education, Project
@@ -317,11 +318,15 @@ def add_project(request):
 
         project = Project()
         project.title = request.POST['title']
-        project.name = request.POST['name']     
+        project.name = request.POST['name']   
+        project.in_progress = request.POST['in_progress']  
         project.language = request.POST['language']
         project.description = request.POST['description']
-        project.completion = request.POST['completion']
-        project.in_progress = request.POST['in_progress']
+        if request.POST['completion'] == '':
+            project.completion = '0'
+        else:    
+            project.completion = request.POST['completion']           
+        
         project.user = request.user    
 
         try:
@@ -370,4 +375,52 @@ def delete_project(request, id):
     project.delete()
     return redirect('view')                 
 
+@login_required(login_url='login')
+def front_end(request):
+    data = UserProfile.objects.get(vuser = request.user)
+    current = User.objects.get(active = True)
+    users = request.user
+    current_profile = UserProfile.objects.get(vuser = request.user)
+    current_work = Work.objects.filter(user = request.user).first()
+    current_education = Education.objects.filter(user = request.user).first()
+    current_project = Project.objects.filter(user = request.user).first()
+    
+    if current_work.title != '' and current_education.title != '' and current_project.title != '':
+        criteria = {'met': 'True'}
+    else:
+        criteria ={'met':'False'}    
 
+    if str(request.user) == str(current.username):
+        same = {'status': 'True'}
+    else:
+        same = {'status': 'False'}      
+
+    if request.method == 'POST':
+        user = request.user
+        if check_password(request.POST['password'],user.password):
+            current.active = False
+            user.active = True
+            try:
+                current.save()
+                user.save()
+                return redirect('frontend')
+            except:
+                return render(request,'admin-panel/panel/front-end.html',{'data':data,'frontend':'active','current':current,'same':same,'criteria':criteria,'error':'Could Not Activate!'})        
+        else:
+            return render(request,'admin-panel/panel/front-end.html',{'data':data,'frontend':'active','current':current,'same':same,'criteria':criteria,'error':'Password is Incorrect!'})       
+    else:
+        return render(request,'admin-panel/panel/front-end.html',{'data':data,'frontend':'active','current':current,'same':same,'criteria':criteria})
+
+@login_required(login_url='login')
+def delete_user(request):
+    data = UserProfile.objects.get(vuser = request.user)
+    user = request.user
+    if request.method == 'POST':
+        if check_password(request.POST['password'],user.password):
+            user.delete()
+            return redirect('logout')
+        else:
+            return render(request,'admin-panel/panel/delete-user.html',{'data':data,'error':'Password Incorrect!'})
+            
+    else:
+        return render(request,'admin-panel/panel/delete-user.html',{'data':data})            
