@@ -67,8 +67,8 @@
               <div class="card-body">
                 <fieldset class="form-group">
                   <select class="custom-select" id="customSelect" name="in_progress">
-                      <option value="False" selected>False</option>
-                      <option value="True">True</option>
+                      <option value="False" {% if project.in_progress == False%}selected {%endif%}>False</option>
+                      <option value="True" {% if project.in_progress == True%}selected {%endif%}>True</option>
                   </select>
               </fieldset>
               </div>

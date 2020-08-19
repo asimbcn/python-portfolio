@@ -317,15 +317,12 @@ def add_project(request):
 
         project = Project()
         project.title = request.POST['title']
-        project.name = request.POST['name']
-        project.user = request.user        
-        if request.POST['in_progress'] == 'True':
-            project.in_progress = request.POST['in_progress']
-            project.language = request.POST['language']
-            project.description = request.POST['description']
-            project.completion = request.POST['completion']
-        else:
-            project.in_progress = request.POST['in_progress'] 
+        project.name = request.POST['name']     
+        project.language = request.POST['language']
+        project.description = request.POST['description']
+        project.completion = request.POST['completion']
+        project.in_progress = request.POST['in_progress']
+        project.user = request.user    
 
         try:
             project.image = request.FILES['image']
@@ -346,7 +343,23 @@ def edit_project(request, id):
     data = UserProfile.objects.get(vuser = request.user)
     project = Project.objects.get(id = id)
     if request.method == 'POST':
-        pass
+
+        if request.POST['title'] != '': project.title = request.POST['title']
+        if request.POST['name'] != '': project.name = request.POST['name']     
+        if request.POST['language'] != '': project.language = request.POST['language']
+        if request.POST['description'] != '': project.description = request.POST['description']
+        if request.POST['completion'] != '': project.completion = request.POST['completion']
+        if request.POST['in_progress'] != '': project.in_progress = request.POST['in_progress']
+        try:
+            project.image = request.FILES['image']
+        except MultiValueDictKeyError:
+            pass
+
+        try:
+            project.save()
+            return redirect('view')
+        except:
+            return render(request,'admin-panel/panel/edit-project.html',{'data':data,'project':project,'error':'Could not Edit Project','active':'active'}) 
     else:
         return render(request,'admin-panel/panel/edit-project.html',{'data':data,'project':project,'active':'active'})    
         
