@@ -8,7 +8,8 @@
         <div class="content-wrapper-before"></div>
         <div class="content-header row">
           <div class="content-header-left col-md-4 col-12 mb-2">
-            <h3 class="content-header-title">User Data</h3>
+			<h3 class="content-header-title">User Data</h3>
+			{% if error %}<h4 class="content-header-title" style="color: red;">{{error}}</h4>{%endif%}
 		  </div>
 		  <!-- breadcrumb -->
           <div class="content-header-right col-md-8 col-12">
@@ -258,6 +259,60 @@
 											<a href="{%url 'deleteProject' p.id%}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
 										</td>
 									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+				</div>
+		</div>
+		<!-- Contact -->
+		<div class="content-body">
+			<!-- Basic Tables start -->
+				<div class="row">
+				<div class="col-12">
+				<div class="card">
+				<div class="card-header">
+					<h4 class="card-title">Contact</h4>
+					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+					<div class="heading-elements">
+						<ul class="list-inline mb-0">
+							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+							<li><a data-action="close"><i class="ft-x"></i></a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="card-content collapse show">
+					<div class="card-body">
+						<div class="table-responsive">
+							<table class="table">
+								<thead>
+									<tr>
+										<th>Name</th>
+										<th>Email</th>
+										<th>Subject</th>
+										<th>Description</th>
+										<th>Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for c in contact %}
+									{% if c.status == False%}
+									<tr>
+										<td>{{c.name}}</td>
+										<td>{{c.email}}</td>
+										<td>{{c.subject}}</td>
+										<td>{{c.description}}</td>
+										<td>
+											<a href="{% url 'seen' c.cid%}" onclick="return confirm('Mark it seen ?');"><i class="ft-edit"></i></a>
+										</td>
+									</tr>
+									{% endif %}
 									{% endfor %}
 								</tbody>
 							</table>

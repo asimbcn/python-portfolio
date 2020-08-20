@@ -4,7 +4,7 @@ from datetime import datetime
 from django.contrib.auth.hashers import check_password
 from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
-from User.models import User, UserProfile, Work, Education, Project
+from User.models import User, UserProfile, Work, Education, Project, Contact
 
 # Register Code
 code = 'portfolio'
@@ -196,7 +196,8 @@ def table(request):
     work = Work.objects.filter(user = user)
     education = Education.objects.filter(user = user)
     project = Project.objects.filter(user = user)
-    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education,'extra':extra,'active':'active'})
+    contact = Contact.objects.filter(user = user)
+    return render(request, 'admin-panel/panel/tables.html', {'data':profile,'project':project,'work':work,'education':education,'extra':extra,'active':'active' ,'contact':contact})
 
 @login_required(login_url='login')
 def edit_user(request):
@@ -486,4 +487,17 @@ def delete_user(request):
             return render(request,'admin-panel/panel/delete-user.html',{'data':data,'error':'Password Incorrect!'})
             
     else:
-        return render(request,'admin-panel/panel/delete-user.html',{'data':data})            
+        return render(request,'admin-panel/panel/delete-user.html',{'data':data})       
+
+
+@login_required(login_url='login')
+def seen(request, id): 
+    contact = Contact.objects.get(cid  = id)
+    contact.status = True
+    try:
+        contact.save()
+        return redirect('view')
+    except:
+        return redirect('view')    
+    
+                

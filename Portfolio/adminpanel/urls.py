@@ -13,6 +13,7 @@ urlpatterns = [
     path('OTF/',views.OTF,name='otf'),
     path('view/',views.table,name='view'),
     path('edit-user/',views.edit_user,name='editUser'),
+    path('seen/<int:id>',views.seen,name='seen'),
 
     path('add-work/',views.add_work,name='addWork'),
     path('edit-work/<int:id>',views.edit_work,name='editWork'),
