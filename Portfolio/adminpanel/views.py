@@ -6,6 +6,9 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.contrib.auth.decorators import login_required
 from User.models import User, UserProfile, Work, Education, Project
 
+# Register Code
+code = 'portfolio'
+
 # Create your views here.
 def login(request):
     if request.method == 'POST':
@@ -37,9 +40,20 @@ def register(request):
             agree =  request.POST.get('agree-term', False)
             if agree == False:
                 return render(request, 'admin-panel/register.html', {'error':'Terms and Conditions not satisfied'})
-            else:    
+            else:  
+                if len(request.POST['username']) < 6:
+                    return render(request, 'admin-panel/register.html', {'error':'Username Must be minimum 8 characters!'})
+                if len(request.POST['password']) < 6:
+                    return render(request, 'admin-panel/register.html', {'error':'Password Must be minimum 8 characters!'})
+                
+                try:    
+                    verify = UserProfile.objects.get(email = request.POST['email'])
+                    return render(request, 'admin-panel/register.html', {'error':'Email Exist!'})
+                except UserProfile.DoesNotExist:
+                    pass             
+                      
                 user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'])
-                if request.POST['code'] != 'code':
+                if request.POST['code'] != code:
                     user.delete()
                     return render(request, 'admin-panel/register.html', {'error':'Invalid Code!'})
                 profile = UserProfile()
@@ -52,62 +66,109 @@ def register(request):
                     return redirect('login')
                 except:
                     user.delete()
-                    return render(request,'admin-panel/register.html',{'error':'Could Not Register User'})
+                    return render(request,'admin-panel/register.html',{'error':'Could Not Register User'})    
     else:
         return render(request,'admin-panel/register.html')
+
+def reset_psw(request):
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(id = request.POST['id'])
+        except:
+            return render(request,'admin-panel/reset.html',{'error':'User Doesnot Exist'})
+
+        if len(request.POST['pass1']) < 6 or len(request.POST['pass2']) < 6:
+            return render(request,'admin-panel/reset-psw.html',{'user':user,'error':'Password Must be atlest 6 characters!'})         
+
+        if request.POST['pass1'] == request.POST['pass2']:
+            user.set_password(request.POST['pass1'])
+            try:
+                user.save()
+                return redirect('login')
+            except:
+                return render(request,'admin-panel/reset-psw.html',{'user':user,'error':'Error Resetting New Password!'})        
+        else:
+            return render(request,'admin-panel/reset-psw.html',{'user':user,'error':'Password Doesnot Match'})        
+        return redirect('reset')
+        
+    else:
+        return render(request,'admin-panel/reset-psw.html')        
+
+def reset_password(request):
+    if request.method == 'POST':
+        try:
+            user = User.objects.get(username=request.POST['username'])
+            return render(request,'admin-panel/reset-psw.html' ,{'user':user})
+        except User.DoesNotExist:
+            return render(request,'admin-panel/reset.html',{'error':'Username not Found!'})
+        
+    else:
+        return render(request,'admin-panel/reset.html')
+
+def reset_password_email(request):
+    if request.method == 'POST':
+        try:
+            profile = UserProfile.objects.get(email=request.POST['email'])
+            user = profile.vuser
+            return render(request,'admin-panel/reset-psw.html' ,{'user':user})
+        except UserProfile.DoesNotExist:
+            return render(request,'admin-panel/reset-email.html',{'error':'Email not Found!'})
+    else:
+        return render(request,'admin-panel/reset-email.html')                   
 
 @login_required(login_url='login')
 def OTF(request):
     if request.method == 'POST':
-        try:
-            user = request.user
-            profile = UserProfile.objects.get(vuser = user)
-            profile.name = request.POST['name']
-            profile.interest = request.POST['interest']
-            profile.address = request.POST['address']
-            if request.POST['phone'] == '':
-                profile.phone_no = '000000'
-            else:    
-                profile.phone_no = request.POST['phone']
-            profile.website = request.POST['website']
-            profile.about = request.POST['about']
+        user = request.user
+        profile = UserProfile.objects.get(vuser = user)
+        if request.POST['name'] != '' : profile.name = request.POST['name']
+        elif request.POST['name'] == '' : profile.name = 'Not Assigned'
+        else: pass
+    
+        profile.interest = request.POST['interest']
+        profile.address = request.POST['address']
+        if request.POST['phone'] == '':
+            profile.phone_no = '0'
+        else:    
+            profile.phone_no = request.POST['phone']
+        profile.website = request.POST['website']
+        profile.about = request.POST['about']
 
+        if request.POST['title'] != '':
             work = Work()
             work.title = request.POST['title']
             work.c_name = request.POST['cname']
-            work.work_from = request.POST['wfrom'] 
-            work.work_till = request.POST['wtill']
             work.description = request.POST['wdesc']
             work.user = user
-
+            
+        if request.POST['etitle'] != '':
             education = Education()
             education.title = request.POST['etitle']
             education.name = request.POST['ename']
-            education.study_from = request.POST['efrom']
-            education.study_till = request.POST['etill']
             education.description = request.POST['edesc']
             education.user = user
-            
+
+        if request.POST['ptitle'] != '':
             project = Project()
             project.title = request.POST['ptitle']
             project.name = request.POST['pname']
             project.user = user
 
-            try:
-                profile.save()
+        try:
+            profile.save()
+            if request.POST['title'] != '':
                 work.save()
+            if request.POST['etitle'] != '':    
                 education.save()
+            if request.POST['ptitle'] != '':
                 project.save()
-                return redirect('index')
+            return redirect('index')
 
-            except:
-                work.delete()
-                education.delete()
-                project.delete()
-                logout()     
-
-        except UserProfile.DoesNotExist:
-            return render(request, 'admin-panel/login.html', {'error':'User Not Registered'}) 
+        except:
+            work.delete()
+            education.delete()
+            project.delete()
+            logout()     
     else:        
         return render(request,'admin-panel/OTF.html')         
 
@@ -384,8 +445,10 @@ def front_end(request):
     current_work = Work.objects.filter(user = request.user).first()
     current_education = Education.objects.filter(user = request.user).first()
     current_project = Project.objects.filter(user = request.user).first()
-    
-    if current_work.title != '' and current_education.title != '' and current_project.title != '':
+
+    if current_work == None or current_education == None or current_project == None:
+        criteria = {'met': 'False'}
+    elif current_work.title != '' and current_education.title != '' and current_project.title != '':
         criteria = {'met': 'True'}
     else:
         criteria ={'met':'False'}    
