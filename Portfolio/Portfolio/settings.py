@@ -26,7 +26,8 @@ SECRET_KEY = '2#w$y5%5ywq(+bgfk&x8-fx=$nx!o44vy+jjqek2&f*#7x3#f-'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+
+# ALLOWED_HOSTS=["portfolio.com", "localhost", "127.0.0.1"]
 
 
 # Application definition
