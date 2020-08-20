@@ -91,6 +91,7 @@ class Contact(models.Model):
     subject = models.CharField(max_length=50)
     description = models.TextField(null=True)
     status = models.BooleanField(default=False)
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
 
     def __str__(self):
         value = self.subject + ' -> ' + self.email
