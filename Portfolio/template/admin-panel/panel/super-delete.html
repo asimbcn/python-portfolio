@@ -62,7 +62,7 @@
                                 {%for a in all%}
 								<tr>
 									<td>
-                                        {% if a.name == 'Not Assigned' %}
+                                        {% if a.name == 'Not Assigned' or a.name == 'Unknown'%}
                                         {{a.vuser}}
                                         {%else%}
                                         {{a.name}}
