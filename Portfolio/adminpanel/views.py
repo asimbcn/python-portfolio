@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib import auth
+import random
 from datetime import datetime
 from django.contrib.auth.hashers import check_password
 from django.utils.datastructures import MultiValueDictKeyError
@@ -193,6 +194,7 @@ def table(request):
         'phone': phone[-3:],
         'email': email[0:2]
     }
+    print('resume=',profile.resume,'.')
     work = Work.objects.filter(user = user)
     education = Education.objects.filter(user = user)
     project = Project.objects.filter(user = user)
@@ -215,8 +217,16 @@ def edit_user(request):
         if request.POST['phone_no'] != '': profile.phone_no = request.POST['phone_no']    
         if request.POST['website'] != '': profile.website = request.POST['website']
         if request.POST['about'] != '': profile.about = request.POST['about']
+
+        try:
+            profile.resume = request.FILES['resume']
+        except MultiValueDictKeyError:    
+            pass
+        
         try:
             profile.image = request.FILES['image']
+            print(profile.image)
+            
         except MultiValueDictKeyError:    
             pass
         
@@ -499,5 +509,19 @@ def seen(request, id):
         return redirect('view')
     except:
         return redirect('view')    
+
     
-                
+@login_required(login_url='login')
+def super_delete(request):
+    profile = UserProfile.objects.get(vuser = request.user)
+    all_user = UserProfile.objects.all()
+    return render(request,'admin-panel/panel/super-delete.html',{'data':profile,'all':all_user,'active':'active'})                
+
+@login_required(login_url='login')
+def confirm_delete(request,id):
+    user = User.objects.get(id = id)
+    try:
+        user.delete()
+        return redirect('superDel')
+    except:
+        return render(request,'admin-panel/panel/super-delete.html',{'data':profile,'all':all_user,'active':'active','error':'Could Not Delete'})    

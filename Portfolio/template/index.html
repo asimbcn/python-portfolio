@@ -246,7 +246,7 @@
 			</div>
 		</div>
 	</div>
-	
+	<!-- CV DOWNLOAD -->
 	<div id="fh5co-started" class="fh5co-bg-dark">
 		<div class="overlay"></div>
 		<div class="container">
@@ -254,7 +254,11 @@
 				<div class="col-md-8 col-md-offset-2 text-center fh5co-heading">
 					<h2>Hire Me!</h2>
 					<p>You can get my Resume from here and Hire me!</p>
-					<p><a href="{% url 'error404' %}" class="btn btn-default btn-lg">Resume</a></p>
+					{% if profile.resume %}
+					<p><a href="{{profile.resume.url}}" class="btn btn-default btn-lg" download>Resume</a></p>
+					{%else%}
+					<p><a href="{% url 'error'%}" class="btn btn-default btn-lg">Resume</a></p>
+					{% endif %}
 				</div>
 			</div>
 		</div>

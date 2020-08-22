@@ -22,8 +22,7 @@ class User(AbstractBaseUser):
         unique = True
     )
     active = models.BooleanField(default=False)
-    is_superuser = models.BooleanField(default=False)
-    is_staff = models.BooleanField(default=False)
+    superuser = models.BooleanField(default=False)
 
     EMAIL_FIELD = 'username'
     USERNAME_FIELD = 'username'
@@ -44,6 +43,7 @@ class UserProfile(models.Model):
     website = models.CharField(max_length=100,null=True)
     about = models.TextField(null=True)
     image = models.ImageField(upload_to='user/',null=True)
+    resume = models.FileField(upload_to='resume/',null=True)
     vuser = models.ForeignKey(User,on_delete=models.CASCADE)
 
     def __str__(self):

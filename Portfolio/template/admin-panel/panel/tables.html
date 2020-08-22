@@ -8,7 +8,11 @@
         <div class="content-wrapper-before"></div>
         <div class="content-header row">
           <div class="content-header-left col-md-4 col-12 mb-2">
+			  {% if request.user.superuser == True%}
+			  <h3 class="content-header-title"><a href="{% url 'superDel'%}" >User  Data</a></h3>
+			  {%else%}
 			<h3 class="content-header-title">User Data</h3>
+			{%endif%}
 			{% if error %}<h4 class="content-header-title" style="color: red;">{{error}}</h4>{%endif%}
 		  </div>
 		  <!-- breadcrumb -->
@@ -57,6 +61,7 @@
 									<th>Website</th>
 									<th>About</th>
 									<th>Image</th>
+									<th>Resume</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -76,6 +81,13 @@
 									{% else %}	
 										False
 									{%endif%}
+									</td>
+									<td>
+										{%if data.resume %}
+										True
+										{%else%}
+										False
+										{%endif%}
 									</td>
 								</tr>
 							</tbody>

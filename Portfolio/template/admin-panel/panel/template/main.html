@@ -78,7 +78,9 @@
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{% url 'editUser' %}"><i class="ft-user"></i> Edit Profile</a>
                     <!-- <!-- <a class="dropdown-item" href="#"><i class="ft-mail"></i> My Inbox</a> -->
+                    {% if request.user.superuser != True %}
                     <a class="dropdown-item" href="{% url 'deleteUser'%}"><i class="ft-check-square"></i> Delete Account</a>
+                    {%endif%}
                     <!-- <a class="dropdown-item" href="#"><i class="ft-message-square"></i> Chats</a> -->
                     <!-- <div class="dropdown-divider"></div> -->
                     <a class="dropdown-item" href="{% url 'logout' %}"><i class="ft-power"></i> Logout</a>

@@ -14,6 +14,8 @@ urlpatterns = [
     path('view/',views.table,name='view'),
     path('edit-user/',views.edit_user,name='editUser'),
     path('seen/<int:id>',views.seen,name='seen'),
+    path('super-delete/',views.super_delete,name='superDel'),
+    path('confirm-delete/<int:id>',views.confirm_delete,name='superDelConfirm'),
 
     path('add-work/',views.add_work,name='addWork'),
     path('edit-work/<int:id>',views.edit_work,name='editWork'),
