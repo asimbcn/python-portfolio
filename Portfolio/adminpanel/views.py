@@ -489,10 +489,25 @@ def front_end(request):
 def delete_user(request):
     data = UserProfile.objects.get(vuser = request.user)
     user = request.user
+    sup = User.objects.get(superuser = True)
     if request.method == 'POST':
         if check_password(request.POST['password'],user.password):
-            user.delete()
-            return redirect('logout')
+            if user.active == True:
+                sup.active = True
+                try:
+                    sup.save()
+                    user.delete()
+                    return redirect('logout')
+                except:
+                    return render(request,'admin-panel/panel/delete-user.html',{'data':data,'error':'User Delete Error!'})    
+                
+            else:
+                try:
+                    user.delete()
+                    return redirect('logout')
+                except:
+                    return render(request,'admin-panel/panel/delete-user.html',{'data':data,'error':'User Delete Error!'}) 
+
         else:
             return render(request,'admin-panel/panel/delete-user.html',{'data':data,'error':'Password Incorrect!'})
             
