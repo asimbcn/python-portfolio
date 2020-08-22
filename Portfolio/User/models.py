@@ -22,6 +22,8 @@ class User(AbstractBaseUser):
         unique = True
     )
     active = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
 
     EMAIL_FIELD = 'username'
     USERNAME_FIELD = 'username'
