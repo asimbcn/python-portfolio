@@ -3,342 +3,355 @@
 {% block 'title' %}View Data{% endblock %}
 {% block 'content'%}
 
-    <div class="app-content content">
-      <div class="content-wrapper">
-        <div class="content-wrapper-before"></div>
-        <div class="content-header row">
-          <div class="content-header-left col-md-4 col-12 mb-2">
-			  {% if request.user.superuser == True%}
-			  <h3 class="content-header-title"><a href="{% url 'superDel'%}" >User  Data</a></h3>
-			  {%else%}
-			<h3 class="content-header-title">User Data</h3>
-			{%endif%}
-			{% if error %}<h4 class="content-header-title" style="color: red;">{{error}}</h4>{%endif%}
-		  </div>
-		  <!-- breadcrumb -->
-          <div class="content-header-right col-md-8 col-12">
-            <div class="breadcrumbs-top float-md-right">
-              <div class="breadcrumb-wrapper mr-1">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="{% url 'index'%}">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">View Data
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>
-		</div>
-		<!-- User Profile -->
-        <div class="content-body">
-		<!-- Basic Tables start -->
-			<div class="row">
-			<div class="col-12">
-			<div class="card">
-			<div class="card-header">
-				<h4 class="card-title">User Profile</h4>
-				<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-				<div class="heading-elements">
-					<ul class="list-inline mb-0">
-						<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-						<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-						<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-						<li><a data-action="close"><i class="ft-x"></i></a></li>
-					</ul>
-				</div>
+<div class="app-content content">
+	<div class="content-wrapper">
+		<div class="content-wrapper-before"></div>
+		<div class="content-header row">
+			<div class="content-header-left col-md-4 col-12 mb-2">
+				{% if request.user.superuser == True%}
+				<h3 class="content-header-title"><a href="{% url 'superDel'%}">User Data</a></h3>
+				{%else%}
+				<h3 class="content-header-title">User Data</h3>
+				{%endif%}
+				{% if error %}<h4 class="content-header-title" style="color: red;">{{error}}</h4>{%endif%}
 			</div>
-			<div class="card-content collapse show">
-				<div class="card-body">
-					<div class="table-responsive">
-						<table class="table">
-							<thead>
-								<tr>
-									<th>Name</th>
-									<th>Interest</th>
-									<th>Address</th>
-									<th>Contact</th>
-									<th>Email</th>
-									<th>Website</th>
-									<th>About</th>
-									<th>Image</th>
-									<th>Resume</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td>{{data.name}}</td>
-									<td>{{data.interest}}</td>
-									<td>{{data.address}}</td>
-									<td>***{{extra.phone}}</td>
-									<td>{{extra.email}}**.com</td>
-									<td>{% if data.website != ''%}
-										<a href="{{data.website}}" target="_blank">Link</a> 
-										{%endif%}</td>
-									<td>{{data.about}}</td>
-									<td>
-									{% if data.image != '' %}
-										True
-									{% else %}	
-										False
-									{%endif%}
-									</td>
-									<td>
-										{%if data.resume %}
-										True
-										{%else%}
-										False
-										{%endif%}
-									</td>
-								</tr>
-							</tbody>
-						</table>
+			<!-- breadcrumb -->
+			<div class="content-header-right col-md-8 col-12">
+				<div class="breadcrumbs-top float-md-right">
+					<div class="breadcrumb-wrapper mr-1">
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item"><a href="{% url 'index'%}">Dashboard</a>
+							</li>
+							<li class="breadcrumb-item active">View Data
+							</li>
+						</ol>
 					</div>
 				</div>
 			</div>
 		</div>
-	</div>
+		<!-- User Profile -->
+		<div class="content-body">
+			<!-- Basic Tables start -->
+			<div class="row">
+				<div class="col-12">
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">User Profile</h4>
+							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+									<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+									<li><a data-action="close"><i class="ft-x"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Interest</th>
+												<th>Address</th>
+												<th>Contact</th>
+												<th>Email</th>
+												<th>Website</th>
+												<th>About</th>
+												<th>Image</th>
+												<th>Resume</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>{{data.name}}</td>
+												<td>{{data.interest}}</td>
+												<td>{{data.address}}</td>
+												<td>***{{extra.phone}}</td>
+												<td>{{extra.email}}**.com</td>
+												<td>{% if data.website != ''%}
+													<a href="https://{{data.website}}" target="_blank">Link</a>
+													{%endif%}</td>
+												<td>{{data.about}}</td>
+												<td>
+													{% if data.image != '' %}
+													True
+													{% else %}
+													False
+													{%endif%}
+												</td>
+												<td>
+													{%if data.resume %}
+													True
+													{%else%}
+													False
+													{%endif%}
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 		<!-- Work -->
 		<div class="content-body">
 			<!-- Basic Tables start -->
-				<div class="row">
+			<div class="row">
 				<div class="col-12">
-				<div class="card">
-				<div class="card-header">
-					<h4 class="card-title"><a href="{% url 'addWork'%}" style="text-decoration: none;">Work</a></h4>
-					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-					<div class="heading-elements">
-						<ul class="list-inline mb-0">
-							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-							<li><a data-action="close"><i class="ft-x"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="card-content collapse show">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Title</th>
-										<th>Company Name</th>
-										<th>Work Start</th>
-										<th>Work End</th>
-										<th>Description</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for w in work%}
-									<tr>
-										<td>{{w.title}}</td>
-										<td>{{w.c_name}}</td>
-										<td>{{w.work_from}}</td>
-										<td>{{w.work_till}}</td>
-										<td>{{w.description}}</td>
-										<td>
-											<a href="{%url 'editWork' w.id %}"><i class="la la-edit"></i></a> &nbsp;&nbsp;
-											<a href="{%url 'deleteWork' w.id %}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
-										</td>
-										
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title"><a href="{% url 'addWork'%}" style="text-decoration: none;">Work</a>
+							</h4>
+							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+									<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+									<li><a data-action="close"><i class="ft-x"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Title</th>
+												<th>Company Name</th>
+												<th>Work Start</th>
+												<th>Work End</th>
+												<th>Description</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for w in work%}
+											<tr>
+												<td>{{w.title}}</td>
+												<td>{{w.c_name}}</td>
+												<td>{{w.work_from}}</td>
+												<td>{{w.work_till}}</td>
+												<td>{{w.description}}</td>
+												<td>
+													<a href="{%url 'editWork' w.id %}"><i class="la la-edit"></i></a>
+													&nbsp;&nbsp;
+													<a href="{%url 'deleteWork' w.id %}"
+														onclick="return confirm('Are you sure you want to delete this data?');"><i
+															class="ft-trash"></i></a>
+												</td>
+
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-				</div>
 		</div>
 		<!-- Education -->
 		<div class="content-body">
 			<!-- Basic Tables start -->
-				<div class="row">
+			<div class="row">
 				<div class="col-12">
-				<div class="card">
-				<div class="card-header">
-					<h4 class="card-title"><a href="{% url 'addEducation'%}" style="text-decoration: none;">Education</a></h4>
-					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-					<div class="heading-elements">
-						<ul class="list-inline mb-0">
-							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-							<li><a data-action="close"><i class="ft-x"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="card-content collapse show">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Title</th>
-										<th>Name</th>
-										<th>Study From</th>
-										<th>Study End</th>
-										<th>Description</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for e in education%}
-									<tr>
-										<td>{{e.title}}</td>
-										<td>{{e.name}}</td>
-										<td>{{e.study_from}}</td>
-										<td>{{e.study_till}}</td>
-										<td>{{e.description}}</td>
-										<td>
-											<a href="{%url 'editEducation' e.id%}"><i class="la la-edit"></i></a> &nbsp;&nbsp;
-											<a href="{%url 'deleteEducation' e.id%}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
-										</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title"><a href="{% url 'addEducation'%}"
+									style="text-decoration: none;">Education</a></h4>
+							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+									<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+									<li><a data-action="close"><i class="ft-x"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Title</th>
+												<th>Name</th>
+												<th>Study From</th>
+												<th>Study End</th>
+												<th>Description</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for e in education%}
+											<tr>
+												<td>{{e.title}}</td>
+												<td>{{e.name}}</td>
+												<td>{{e.study_from}}</td>
+												<td>{{e.study_till}}</td>
+												<td>{{e.description}}</td>
+												<td>
+													<a href="{%url 'editEducation' e.id%}"><i
+															class="la la-edit"></i></a> &nbsp;&nbsp;
+													<a href="{%url 'deleteEducation' e.id%}"
+														onclick="return confirm('Are you sure you want to delete this data?');"><i
+															class="ft-trash"></i></a>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-				</div>
 		</div>
 		<!-- Project -->
 		<div class="content-body">
 			<!-- Basic Tables start -->
-				<div class="row">
+			<div class="row">
 				<div class="col-12">
-				<div class="card">
-				<div class="card-header">
-					<h4 class="card-title"><a href="{% url 'addProject'%}" style="text-decoration: none;">Project</a></h4>
-					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-					<div class="heading-elements">
-						<ul class="list-inline mb-0">
-							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-							<li><a data-action="close"><i class="ft-x"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="card-content collapse show">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Title</th>
-										<th>Name</th>
-										<th>In_Progress</th>
-										<th>Language</th>
-										<th>Description</th>
-										<th>Progress</th>
-										<th>Image</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for p in project %}
-									<tr>
-										<td>{{p.title}}</td>
-										<td>{{p.name}}</td>
-										<td>
-										{%if p.in_progress%}
-											True
-										{% else %}
-											False
-										{%endif%}
-										</td>
-										<td>{{p.language}}</td>
-										<td>{{p.description}}</td>
-										<td>{{p.completion}} %</td>
-										<td>
-											{% if p.image != '' %}
-												True
-											{% else %}
-												False
-											{% endif %}
-										</td>
-										<td>
-											<a href="{%url 'editProject' p.id%}"><i class="la la-edit"></i></a>
-											<a href="{%url 'deleteProject' p.id%}" onclick="return confirm('Are you sure you want to delete this data?');"><i class="ft-trash"></i></a>
-										</td>
-									</tr>
-									{% endfor %}
-								</tbody>
-							</table>
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title"><a href="{% url 'addProject'%}"
+									style="text-decoration: none;">Project</a></h4>
+							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+									<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+									<li><a data-action="close"><i class="ft-x"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Title</th>
+												<th>Name</th>
+												<th>In_Progress</th>
+												<th>Language</th>
+												<th>Description</th>
+												<th>Progress</th>
+												<th>Image</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for p in project %}
+											<tr>
+												<td>{{p.title}}</td>
+												<td>{{p.name}}</td>
+												<td>
+													{%if p.in_progress%}
+													True
+													{% else %}
+													False
+													{%endif%}
+												</td>
+												<td>{{p.language}}</td>
+												<td>{{p.description}}</td>
+												<td>{{p.completion}} %</td>
+												<td>
+													{% if p.image != '' %}
+													True
+													{% else %}
+													False
+													{% endif %}
+												</td>
+												<td>
+													<a href="{%url 'editProject' p.id%}"><i class="la la-edit"></i></a>
+													<a href="{%url 'deleteProject' p.id%}"
+														onclick="return confirm('Are you sure you want to delete this data?');"><i
+															class="ft-trash"></i></a>
+												</td>
+											</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-				</div>
 		</div>
 		<!-- Contact -->
 		<div class="content-body">
 			<!-- Basic Tables start -->
-				<div class="row">
+			<div class="row">
 				<div class="col-12">
-				<div class="card">
-				<div class="card-header">
-					<h4 class="card-title">Contact</h4>
-					<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
-					<div class="heading-elements">
-						<ul class="list-inline mb-0">
-							<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
-							<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
-							<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
-							<li><a data-action="close"><i class="ft-x"></i></a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="card-content collapse show">
-					<div class="card-body">
-						<div class="table-responsive">
-							<table class="table">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Email</th>
-										<th>Subject</th>
-										<th>Description</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody>
-									{% for c in contact %}
-									{% if c.status == False%}
-									<tr>
-										<td>{{c.name}}</td>
-										<td>{{c.email}}</td>
-										<td>{{c.subject}}</td>
-										<td>{{c.description}}</td>
-										<td>
-											<a href="{% url 'seen' c.cid%}" onclick="return confirm('Mark it seen ?');"><i class="ft-edit"></i></a>
-										</td>
-									</tr>
-									{% endif %}
-									{% endfor %}
-								</tbody>
-							</table>
+					<div class="card">
+						<div class="card-header">
+							<h4 class="card-title">Contact</h4>
+							<a class="heading-elements-toggle"><i class="la la-ellipsis-v font-medium-3"></i></a>
+							<div class="heading-elements">
+								<ul class="list-inline mb-0">
+									<li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+									<li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+									<li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+									<li><a data-action="close"><i class="ft-x"></i></a></li>
+								</ul>
+							</div>
+						</div>
+						<div class="card-content collapse show">
+							<div class="card-body">
+								<div class="table-responsive">
+									<table class="table">
+										<thead>
+											<tr>
+												<th>Name</th>
+												<th>Email</th>
+												<th>Subject</th>
+												<th>Description</th>
+												<th>Action</th>
+											</tr>
+										</thead>
+										<tbody>
+											{% for c in contact %}
+											{% if c.status == False%}
+											<tr>
+												<td>{{c.name}}</td>
+												<td>{{c.email}}</td>
+												<td>{{c.subject}}</td>
+												<td>{{c.description}}</td>
+												<td>
+													<a href="{% url 'seen' c.cid%}"
+														onclick="return confirm('Mark it seen ?');"><i
+															class="ft-edit"></i></a>
+												</td>
+											</tr>
+											{% endif %}
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-				</div>
-		</div>
-		
-      </div>
-    </div>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+	</div>
+</div>
+<!-- ////////////////////////////////////////////////////////////////////////////-->
 
 
-{% endblock %}  
+{% endblock %}
