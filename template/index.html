@@ -56,7 +56,8 @@
 						<div class="display-t js-fullheight">
 							<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
 								{% if profile.image %}
-								<div class="profile-thumb" style="background: url( {{profile.image.url}} );"></div>
+								<div class="profile-thumb" style="background: url( static/{{profile.image.url}} );">
+								</div>
 								{% else%}
 								<div class="profile-thumb"
 									style="background: url( {% static 'homepage/images/portfolio-1.jpg' %} );"></div>
