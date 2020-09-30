@@ -56,7 +56,7 @@
 						<div class="display-t js-fullheight">
 							<div class="display-tc js-fullheight animate-box" data-animate-effect="fadeIn">
 								{% if profile.image %}
-								<div class="profile-thumb" style="background: url( {{profile.image.url}} );">
+								<div class="profile-thumb" style="background: url( static{{profile.image.url}} );">
 								</div>
 								{% else%}
 								<div class="profile-thumb"
@@ -215,7 +215,7 @@
 					{% if p.in_progress == False %}
 					<div class="col-md-3 text-center col-padding animate-box">
 						{% if p.image%}
-						<a href="#" class="work" style="background-image: url( {{ p.image.url }} );"></a>
+						<a href="#" class="work" style="background-image: url( static{{ p.image.url }} );"></a>
 						{%else%}
 						<a href="#" class="work"
 							style="background-image: url( {% static 'homepage/images/portfolio-1.jpg' %} );"></a>
@@ -247,7 +247,7 @@
 					<div class="col-md-4">
 						<div class="fh5co-blog animate-box">
 							{% if p.image%}
-							<a href="#" class="blog-bg" style="background-image: url( {{ p.image.url }} );"></a>
+							<a href="#" class="blog-bg" style="background-image: url( static{{ p.image.url }} );"></a>
 							{%else%}
 							<a href="#" class="blog-bg"
 								style="background-image: url( {% static 'homepage/images/portfolio-1.jpg' %} );"></a>
@@ -277,7 +277,7 @@
 						<h2>Hire Me!</h2>
 						<p>You can get my Resume from here and Hire me!</p>
 						{% if profile.resume %}
-						<p><a href="{{profile.resume.url}}" class="btn btn-default btn-lg" download>Resume</a></p>
+						<p><a href="static{{profile.resume.url}}" class="btn btn-default btn-lg" download>Resume</a></p>
 						{%else%}
 						<p><a href="{% url 'error404'%}" class="btn btn-default btn-lg">Resume</a></p>
 						{% endif %}

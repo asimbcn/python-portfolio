@@ -24,7 +24,7 @@
                           {% if data.image == "" %}
                           <img src="{% static 'adminPanel/panel/images/portrait/default.jpg'%}"  alt="avatar">
                           {% else %}
-                          <img src="{{data.image.url}}" alt="avatar">
+                          <img src="static{{data.image.url}}" alt="avatar">
                           {% endif %}
                       </span>
                   </div>
@@ -194,7 +194,7 @@
                           ">
                           {% if current == u.username %}
                           {% if data.image != '' %}
-                          <img class="media-object rounded-circle" style="height: 40px; width: 50px;" src="{{ data.image.url }}" alt="Generic placeholder image">
+                          <img class="media-object rounded-circle" style="height: 40px; width: 50px;" src="static{{ data.image.url }}" alt="Generic placeholder image">
                           {% else %}
                           <img class="media-object rounded-circle" src="{% static 'adminPanel/panel/images/portrait/default.jpg'%}" alt="Generic placeholder image">
                           {% endif %}

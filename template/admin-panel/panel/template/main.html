@@ -64,7 +64,7 @@
                 {% if data.image == '' %}
                     <img src="{% static 'adminPanel/panel/images/portrait/default.jpg'%}" alt="avatar">
                 {% else %}
-                    <img src=" {{data.image.url}}" alt="avatar">
+                    <img src=" static{{data.image.url}}" alt="avatar">
                 {% endif %}
                     <i></i></span></a>
                 <div class="dropdown-menu dropdown-menu-right">
@@ -72,7 +72,7 @@
                     {% if data.image == '' %}
                     <img src="{% static 'adminPanel/panel/images/portrait/default.jpg'%}" alt="avatar">
                 {% else %}
-                    <img src=" {{data.image.url}}" alt="avatar">
+                    <img src=" static{{data.image.url}}" alt="avatar">
                 {% endif %}
                       <span class="user-name text-bold-700 ml-1">{{user.username}}</span></span></a>
                     <div class="dropdown-divider"></div>
