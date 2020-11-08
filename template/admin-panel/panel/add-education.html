@@ -3,120 +3,125 @@
 {% block 'title' %}Add Education{% endblock %}
 {% block 'content'%}
 <div class="app-content content">
-    <div class="content-wrapper">
-      <div class="content-wrapper-before"></div>
-      <div class="content-header row">
-        <div class="content-header-left col-md-4 col-12 mb-2">
-          <h3 class="content-header-title">Add Education</h3>
-          {% if error %}
-          <h4 class="content-header-title" style="color: red;">{{error}}</h4>
-          {% endif %}
-        </div>
-        <div class="content-header-right col-md-8 col-12">
-          <div class="breadcrumbs-top float-md-right">
-            <div class="breadcrumb-wrapper mr-1">
-              <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{% url 'view' %}">View Data</a>
-                </li>
-                <li class="breadcrumb-item active">Add Education
-                </li>
-              </ol>
-            </div>
+  <div class="content-wrapper">
+    <div class="content-wrapper-before"></div>
+    <div class="content-header row">
+      <div class="content-header-left col-md-4 col-12 mb-2">
+        <h3 class="content-header-title">Add Education</h3>
+        {% if error %}
+        <h4 class="content-header-title" style="color: red;">{{error}}</h4>
+        {% endif %}
+      </div>
+      <div class="content-header-right col-md-8 col-12">
+        <div class="breadcrumbs-top float-md-right">
+          <div class="breadcrumb-wrapper mr-1">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="{% url 'view' %}">View Data</a>
+              </li>
+              <li class="breadcrumb-item active">Add Education
+              </li>
+            </ol>
           </div>
         </div>
       </div>
-<form action="{% url 'addEducation'%}" method="POST">
-  {% csrf_token %}
-<div class="content-body">
-  <section class="basic-inputs">
-  <div class="row match-height">
-    <div class="col-xl-4 col-lg-6 col-md-12">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title">Title</h4>
-            </div>
-            <div class="card-block">
-                <div class="card-body">
-                    <fieldset class="form-group">
-                        <input type="text" class="form-control" id="placeholderInput" name="title" placeholder="Enter Education Title">
-                    </fieldset>
+    </div>
+    <form action="{% url 'addEducation'%}" method="POST">
+      {% csrf_token %}
+      <div class="content-body">
+        <section class="basic-inputs">
+          <div class="row match-height">
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Title</h4>
                 </div>
+                <div class="card-block">
+                  <div class="card-body">
+                    <fieldset class="form-group">
+                      <input type="text" class="form-control" id="placeholderInput" name="title"
+                        placeholder="Enter Education Title">
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-    </div>
-    <div class="col-xl-4 col-lg-6 col-md-12">
-      <div class="card">
-          <div class="card-header">
-              <h4 class="card-title">Name</h4>
-          </div>
-          <div class="card-block">
-              <div class="card-body">
-                  <fieldset class="form-group">
-                      <input type="text" class="form-control" id="placeholderInput" name="name" placeholder="Enter Your Education Name">
-                  </fieldset>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Name</h4>
+                </div>
+                <div class="card-block">
+                  <div class="card-body">
+                    <fieldset class="form-group">
+                      <input type="text" class="form-control" id="placeholderInput" name="name"
+                        placeholder="Enter Your Education Name">
+                    </fieldset>
+                  </div>
+                </div>
               </div>
-          </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-6 col-md-12">
-      <div class="card">
-          <div class="card-header">
-              <h4 class="card-title">From</h4>
-          </div>
-          <div class="card-block">
-              <div class="card-body">
-                  <fieldset class="form-group">
-                      <input type="number" class="form-control" id="placeholderInput" name="study_from" placeholder="Start Year of Your Education">
-                  </fieldset>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">From</h4>
+                </div>
+                <div class="card-block">
+                  <div class="card-body">
+                    <fieldset class="form-group">
+                      <input type="number" class="form-control" id="placeholderInput" name="study_from"
+                        placeholder="Start Year of Your Education">
+                    </fieldset>
+                  </div>
+                </div>
               </div>
-          </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-6 col-md-12">
-      <div class="card">
-          <div class="card-header">
-              <h4 class="card-title">End</h4>
-          </div>
-          <div class="card-block">
-              <div class="card-body">
-                  <fieldset class="form-group">
-                      <input type="number" class="form-control" id="placeholderInput" name="study_till" placeholder="End Year of Your Education">
-                  </fieldset>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">End</h4>
+                </div>
+                <div class="card-block">
+                  <div class="card-body">
+                    <fieldset class="form-group">
+                      <input type="number" class="form-control" id="placeholderInput" name="study_till"
+                        placeholder="End Year of Your Education">
+                    </fieldset>
+                  </div>
+                </div>
               </div>
-          </div>
-      </div>
-    </div>
-    <div class="col-xl-4 col-lg-6 col-md-12">
-      <div class="card">
-          <div class="card-header">
-              <h4 class="card-title">Description</h4>
-          </div>
-          <div class="card-block">
-              <div class="card-body">
-                  <fieldset class="form-group">
-                      <textarea class="form-control" id="placeTextarea" name="description" rows="2" placeholder="Description"></textarea>
-                  </fieldset>
+            </div>
+            <div class="col-xl-4 col-lg-6 col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4 class="card-title">Description</h4>
+                </div>
+                <div class="card-block">
+                  <div class="card-body">
+                    <fieldset class="form-group">
+                      <textarea class="form-control" id="placeTextarea" name="description" rows="2"
+                        placeholder="Description"></textarea>
+                    </fieldset>
+                  </div>
+                </div>
               </div>
+            </div>
+            <div style="margin-left: 100px;">
+              <button type="submit" class="btn btn-success btn-min-width mr-1 mb-1">Submit</button>
+              <input type="reset" class="btn btn-danger btn-min-width mr-1 mb-1" value="Clear"></input>
+            </div>
+            <div style="margin-left: 500px;">
+              <a href="{% url 'view' %}" class="btn btn-info btn-min-width mr-1 mb-1">Back</a>
+            </div>
+            <!-- Closing -->
           </div>
+
+        </section>
+
       </div>
-    </div>
-    <div style="margin-left: 71px;">
-      <button type="submit" class="btn btn-success btn-min-width mr-1 mb-1">Submit</button>
-      <input type="reset" class="btn btn-danger btn-min-width mr-1 mb-1" value="Clear"></input>
-    </div>
-    <div style="margin-left: 500px;">
-        <a href="{% url 'view' %}" class="btn btn-info btn-min-width mr-1 mb-1">Back</a>
-    </div>
-  <!-- Closing -->
-  </div>   
-  
-  </section>
-  
-</div>
-</form>
-</div>
+    </form>
+  </div>
 </div>
 
 
-      
-{% endblock %} 
+
+{% endblock %}
